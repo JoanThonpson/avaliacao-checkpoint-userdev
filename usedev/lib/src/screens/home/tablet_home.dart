@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:usedev/src/models/product_model.dart';
-import 'package:usedev/src/widgets/common/product_card.dart';
+import 'package:usedev/src/data/mock_categories.dart';
+import 'package:usedev/src/data/mock_products.dart';
 import 'package:usedev/src/widgets/common/search_bar.dart';
-import 'package:usedev/src/widgets/common/category_chip.dart';
-import 'package:usedev/src/core/theme/colors.dart';
+import 'package:usedev/src/widgets/home/custom_header.dart';
+import 'package:usedev/src/widgets/home/hero_banner.dart';
+import 'package:usedev/src/widgets/home/category_section.dart';
+import 'package:usedev/src/widgets/home/category_grid.dart';
+import 'package:usedev/src/widgets/home/promo_section.dart';
+import 'package:usedev/src/widgets/home/product_highlight_grid.dart';
+import 'package:usedev/src/widgets/home/see_more_button.dart';
+import 'package:usedev/src/widgets/home/newsletter_section.dart';
+import 'package:usedev/src/widgets/home/footer_section.dart';
 
 class TabletHome extends StatefulWidget {
   const TabletHome({super.key});
@@ -14,174 +21,90 @@ class TabletHome extends StatefulWidget {
 
 class _TabletHomeState extends State<TabletHome> {
   final TextEditingController _searchController = TextEditingController();
-  List<ProductModel> _products = [];
-  List<String> _categories = [];
-  String _selectedCategory = 'Todos';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadData();
-  }
-
-  void _loadData() {
-    _products = ProductModel.mockProducts();
-    _categories = ['Todos', 'Camisetas', 'Calças', 'Calçados', 'Jaquetas'];
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'UseDev',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined),
-            onPressed: () {
-              Navigator.pushNamed(context, '/cart');
-            },
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: CustomSearchBar(
-              controller: _searchController,
-              onFilterTap: () {
-                
-                _showFilterDialog();
-              },
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: null,
+            flexibleSpace: FlexibleSpaceBar(
+              background: CustomHeader(
+                onMenuTap: () {},
+                onLoginTap: () => _showLoginDialog(),
+                onCartTap: () => Navigator.pushNamed(context, '/cart'),
+              ),
             ),
+            expandedHeight: 70,
           ),
-          SizedBox(
-            height: 45,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: _categories.length,
-              itemBuilder: (context, index) {
-                final category = _categories[index];
-                return CategoryChip(
-                  label: category,
-                  isSelected: _selectedCategory == category,
-                  onTap: () {
-                    setState(() {
-                      _selectedCategory = category;
-                    });
-                  },
-                );
-              },
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  CustomSearchBar(controller: _searchController),
+                  HeroBanner(
+                    imageUrl: 'assets/images/Imagem_Hero_Mobile.png',
+                    title: 'Hora de abraçar seu lado geek',
+                  ),
+                  const CategorySection(),
+                  CategoryGrid(
+                    categories: MockCategories.getCategories(),
+                    onTap: (category) {
+                      Navigator.pushNamed(
+                        context,
+                        '/category',
+                        arguments: category.id,
+                      );
+                    },
+                  ),
+                  const PromoSection(),
+                  ProductHighlightGrid(
+                    products: MockPromoProducts.getPromoProducts(),
+                    onTap: (product) {
+                      Navigator.pushNamed(
+                        context,
+                        '/product',
+                        arguments: product.id,
+                      );
+                    },
+                  ),
+                  SeeMoreButton(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/products');
+                    },
+                  ),
+                  const NewsletterSection(),
+                  const FooterSection(),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: _buildBody(),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildBody() {
-    final filteredProducts = _selectedCategory == 'Todos'
-        ? _products
-        : _products.where((p) => p.category == _selectedCategory).toList();
-
-    if (filteredProducts.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.search_off,
-              size: 64,
-              color: AppColors.textSecondary,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Nenhum produto encontrado',
-              style: TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: 0.65,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-      ),
-      itemCount: filteredProducts.length,
-      itemBuilder: (context, index) {
-        final product = filteredProducts[index];
-        return ProductCard(
-          product: product,
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              '/product',
-              arguments: product.id,
-            );
-          },
-          onAddToCart: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${product.name} adicionado ao carrinho'),
-                duration: const Duration(seconds: 2),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  void _showFilterDialog() {
+  void _showLoginDialog() {
     showDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Filtros'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const ListTile(
-                title: Text('Ordenar por'),
-                trailing: Icon(Icons.arrow_forward_ios),
-              ),
-              const ListTile(
-                title: Text('Preço'),
-                trailing: Icon(Icons.arrow_forward_ios),
-              ),
-              const ListTile(
-                title: Text('Categorias'),
-                trailing: Icon(Icons.arrow_forward_ios),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: const Text('Login'),
+        content: const Text('Funcionalidade em desenvolvimento'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fechar'),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Aplicar'),
-            ),
-          ],
-        );
-      },
+        ],
+      ),
     );
   }
 

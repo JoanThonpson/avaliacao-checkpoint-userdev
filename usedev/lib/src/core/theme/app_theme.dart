@@ -3,44 +3,59 @@ import 'package:google_fonts/google_fonts.dart';
 import 'colors.dart';
 
 class AppTheme {
-  static ThemeData lightTheme = ThemeData(
-    primaryColor: AppColors.primary,
-    scaffoldBackgroundColor: AppColors.background,
-    colorScheme: const ColorScheme.light(
+  static ThemeData darkTheme = ThemeData(
+    useMaterial3: true,
+    scaffoldBackgroundColor: AppColors.backgroundDark,
+    colorScheme: ColorScheme.dark(
       primary: AppColors.primary,
-      secondary: AppColors.secondary,
-      error: AppColors.error,
+      secondary: AppColors.accentPink,
       surface: AppColors.surface,
+      background: AppColors.backgroundDark,
     ),
-    textTheme: GoogleFonts.interTextTheme(
-      ThemeData.light().textTheme,
+    textTheme: GoogleFonts.poppinsTextTheme(
+      ThemeData.dark().textTheme,
+    ).copyWith(
+      // Títulos grandes usam Orbitron
+      displayLarge: GoogleFonts.orbitron(
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      displayMedium: GoogleFonts.orbitron(
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      headlineLarge: GoogleFonts.orbitron(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      headlineMedium: GoogleFonts.orbitron(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+      ),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.transparent,
       elevation: 0,
-      centerTitle: true,
-      backgroundColor: AppColors.surface,
-      foregroundColor: AppColors.textPrimary,
-      iconTheme: IconThemeData(color: AppColors.textPrimary),
+      iconTheme: const IconThemeData(color: Colors.white),
+      titleTextStyle: GoogleFonts.orbitron(
+        color: Colors.white,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
-        minimumSize: const Size(double.infinity, 48),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: AppColors.divider),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: AppColors.primary, width: 2),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
   );
+
+  // Tema light (se precisar depois)
+  static ThemeData lightTheme = darkTheme; // por enquanto usamos só dark
 }

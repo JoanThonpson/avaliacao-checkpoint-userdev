@@ -1,3 +1,4 @@
+// main.dart
 import 'package:flutter/material.dart';
 import 'package:usedev/src/core/constants/routes.dart';
 import 'package:usedev/src/core/theme/app_theme.dart';
@@ -12,9 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'UseDev',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
+      theme: AppTheme.darkTheme,        // ← Garanta que está usando darkTheme
       initialRoute: AppRoutes.home,
       onGenerateRoute: RouteGenerator.generateRoute,
     );

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:usedev/src/models/product_model.dart';
-import 'package:usedev/src/widgets/common/product_card.dart';
+import 'package:usedev/src/data/mock_categories.dart';
+import 'package:usedev/src/data/mock_products.dart';
 import 'package:usedev/src/widgets/common/search_bar.dart';
-import 'package:usedev/src/widgets/common/category_chip.dart';
-import 'package:usedev/src/core/theme/colors.dart';
+import 'package:usedev/src/widgets/home/custom_header.dart';
+import 'package:usedev/src/widgets/home/hero_banner.dart';
+import 'package:usedev/src/widgets/home/category_section.dart';
+import 'package:usedev/src/widgets/home/category_grid.dart';
+import 'package:usedev/src/widgets/home/promo_section.dart';
+import 'package:usedev/src/widgets/home/product_highlight_grid.dart';
+import 'package:usedev/src/widgets/home/see_more_button.dart';
+import 'package:usedev/src/widgets/home/newsletter_section.dart';
+import 'package:usedev/src/widgets/home/footer_section.dart';
 
 class MobileHome extends StatefulWidget {
   const MobileHome({super.key});
@@ -14,162 +21,150 @@ class MobileHome extends StatefulWidget {
 
 class _MobileHomeState extends State<MobileHome> {
   final TextEditingController _searchController = TextEditingController();
-  List<ProductModel> _products = [];
-  List<String> _categories = [];
-  String _selectedCategory = 'Todos';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadData();
-  }
-
-  void _loadData() {
-    _products = ProductModel.mockProducts();
-    _categories = ['Todos', 'Camisetas', 'Calças', 'Calçados', 'Jaquetas'];
-  }
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'UseDev',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined),
-            onPressed: () {
-              Navigator.pushNamed(context, '/cart');
-            },
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(120),
-          child: Column(
-            children: [
-              CustomSearchBar(
-                controller: _searchController,
-                onFilterTap: () {
-                  
-                },
+      key: _scaffoldKey,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: null,
+            flexibleSpace: FlexibleSpaceBar(
+              background: CustomHeader(
+                onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
+                onLoginTap: () => _showLoginDialog(),
+                onCartTap: () => Navigator.pushNamed(context, '/cart'),
               ),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 45,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: _categories.length,
-                  itemBuilder: (context, index) {
-                    final category = _categories[index];
-                    return CategoryChip(
-                      label: category,
-                      isSelected: _selectedCategory == category,
-                      onTap: () {
-                        setState(() {
-                          _selectedCategory = category;
-                        });
-                      },
+            ),
+            expandedHeight: 70,
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 8),
+                CustomSearchBar(controller: _searchController),
+                HeroBanner(
+                  imageUrl: 'assets/images/Imagem_hero_mobile.png',
+                  title: 'Hora de abraçar seu lado geek',
+                ),
+                const CategorySection(),
+                CategoryGrid(
+                  categories: MockCategories.getCategories(),
+                  onTap: (category) {
+                    Navigator.pushNamed(
+                      context,
+                      '/products',
+                      arguments: category.id,
                     );
                   },
                 ),
-              ),
-              const SizedBox(height: 8),
-            ],
+                const PromoSection(),
+                ProductHighlightGrid(
+                  products: MockPromoProducts.getPromoProducts(),
+                  onTap: (product) {
+                    Navigator.pushNamed(
+                      context,
+                      '/product',
+                      arguments: product.id,
+                    );
+                  },
+                ),
+                SeeMoreButton(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/products');
+                  },
+                ),
+                const NewsletterSection(),
+                const FooterSection(),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
-      body: _buildBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Início',
+      drawer: _buildDrawer(),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Color(0xFF213366),
+            ),
+            child: Text(
+              'UseDev',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search_outlined),
-            activeIcon: Icon(Icons.search),
-            label: 'Buscar',
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Início'),
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            activeIcon: Icon(Icons.favorite),
-            label: 'Favoritos',
+          ListTile(
+            leading: const Icon(Icons.category),
+            title: const Text('Categorias'),
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Perfil',
+          ListTile(
+            leading: const Icon(Icons.favorite_border),
+            title: const Text('Favoritos'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.person_outline),
+            title: const Text('Perfil'),
+            onTap: () {
+              Navigator.pop(context);
+              _showLoginDialog();
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: const Text('Sobre'),
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
         ],
       ),
     );
   }
 
-  Widget _buildBody() {
-    final filteredProducts = _selectedCategory == 'Todos'
-        ? _products
-        : _products.where((p) => p.category == _selectedCategory).toList();
-
-    if (filteredProducts.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.search_off,
-              size: 64,
-              color: AppColors.textSecondary,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Nenhum produto encontrado',
-              style: TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.65,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
+  void _showLoginDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Login'),
+        content: const Text('Funcionalidade em desenvolvimento'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fechar'),
+          ),
+        ],
       ),
-      itemCount: filteredProducts.length,
-      itemBuilder: (context, index) {
-        final product = filteredProducts[index];
-        return ProductCard(
-          product: product,
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              '/product',
-              arguments: product.id,
-            );
-          },
-          onAddToCart: () {
-            
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${product.name} adicionado ao carrinho'),
-                duration: const Duration(seconds: 2),
-              ),
-            );
-          },
-        );
-      },
     );
   }
 
