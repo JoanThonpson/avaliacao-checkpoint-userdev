@@ -70,6 +70,11 @@ flutter:
    - assets/logo/
    - assets/images/Imagem_hero_mobile.png
    - assets/logo/PNG/Logo_UseDev.png
+   - assets/images/Categorias/Mobile/Categorias_Roupas.png
+   - assets/images/Categorias/Mobile/Categoria_Decoração.png
+   - assets/images/Categorias/Mobile/Categoria_canecas.png
+   - assets/images/Categorias/Mobile/Categoria_Acessorios.png
+   - assets/images/Banner_secoes_Mobile.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

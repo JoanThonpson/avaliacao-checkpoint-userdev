@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:usedev/src/widgets/responsive/responsive_layout.dart';
 import 'package:usedev/src/screens/home/mobile_home.dart';
+import 'package:usedev/src/widgets/responsive/responsive_layout.dart';
+//import 'package:usedev/src/screens/home/mobile_home.dart';
 import 'package:usedev/src/screens/home/tablet_home.dart';
 import 'package:usedev/src/screens/home/desktop_home.dart';
 

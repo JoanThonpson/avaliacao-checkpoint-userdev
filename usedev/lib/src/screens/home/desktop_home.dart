@@ -51,8 +51,7 @@ class _DesktopHomeState extends State<DesktopHome> {
                     const SizedBox(height: 8),
                     CustomSearchBar(controller: _searchController),
                     HeroBanner(
-                      imageUrl: 'assets/images/Imagem_Hero.png',
-                      title: 'Hora de abraçar seu lado geek',
+                      
                     ),
                     const CategorySection(),
                     CategoryGrid(

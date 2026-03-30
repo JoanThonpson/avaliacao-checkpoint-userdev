@@ -50,8 +50,6 @@ class _TabletHomeState extends State<TabletHome> {
                   const SizedBox(height: 8),
                   CustomSearchBar(controller: _searchController),
                   HeroBanner(
-                    imageUrl: 'assets/images/Imagem_Hero_Mobile.png',
-                    title: 'Hora de abraçar seu lado geek',
                   ),
                   const CategorySection(),
                   CategoryGrid(

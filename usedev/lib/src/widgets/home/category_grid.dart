@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:usedev/src/core/theme/colors.dart';
+//import 'package:usedev/src/core/theme/colors.dart';
 import 'package:usedev/src/models/category_model.dart'; // ajuste o import se necessário
 
 class CategoryGrid extends StatelessWidget {
