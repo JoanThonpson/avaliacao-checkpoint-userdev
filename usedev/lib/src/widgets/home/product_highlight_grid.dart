@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:usedev/src/core/theme/colors.dart';
 import 'package:usedev/src/models/promo_product_model.dart';
 
 class ProductHighlightGrid extends StatelessWidget {
@@ -13,26 +15,56 @@ class ProductHighlightGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        final product = products[index];
-        return _ProductHighlightCard(
-          product: product,
-          onTap: () => onTap(product),
-        );
-      },
+    return Container(
+      color: AppColors.backgroundWhite,
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        children: [
+          // Lista de cards
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: products.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 24),
+            itemBuilder: (context, index) {
+              final product = products[index];
+              return _ProductCard(
+                product: product,
+                onTap: () => onTap(product),
+              );
+            },
+          ),
+
+          const SizedBox(height: 24),
+
+          // "Ver mais" centralizado
+          GestureDetector(
+            onTap: () {},
+            child: Text(
+              'Ver mais',
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: AppColors.primary, 
+                height: 1.2,
+                decoration: TextDecoration.underline,
+                decorationColor: AppColors.primary,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 24),
+        ],
+      ),
     );
   }
 }
 
-class _ProductHighlightCard extends StatelessWidget {
+class _ProductCard extends StatelessWidget {
   final PromoProductModel product;
   final VoidCallback onTap;
 
-  const _ProductHighlightCard({
+  const _ProductCard({
     required this.product,
     required this.onTap,
   });
@@ -42,107 +74,98 @@ class _ProductHighlightCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          color: AppColors.backgroundWhite, 
+          //borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 2),
+              color: AppColors.primary.withOpacity(0.12), 
+              blurRadius: 24,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Imagem com badge
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.horizontal(left: Radius.circular(12)),
-                  child: Image.asset(
-                    product.imageUrl,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.grey[200],
-                        child: const Icon(Icons.image_not_supported),
-                      );
-                    },
-                  ),
-                ),
-                if (product.badge != null)
-                  Positioned(
-                    top: 4,
-                    left: 4,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        product.badge!,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+            // === FRAME 8 — imagem ===
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+              ),
+              child: Image.asset(
+                product.imageUrl,
+                width: double.infinity,
+                height: 291,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 291,
+                    color: AppColors.backgroundLight,
+                    child: const Icon(
+                      Icons.image_not_supported,
+                      size: 50,
+                      color: AppColors.categoryDescription,
                     ),
-                  ),
-              ],
-            ),
-            // Informações
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.name,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Text(
-                          'R\$ ${product.price.toStringAsFixed(2)}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF213366),
-                          ),
-                        ),
-                        if (product.originalPrice != null) ...[
-                          const SizedBox(width: 8),
-                          Text(
-                            'R\$ ${product.originalPrice!.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              decoration: TextDecoration.lineThrough,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: Icon(Icons.arrow_forward_ios, size: 16),
+
+            // === FRAME 7 — info ===
+            Container(
+              padding: const EdgeInsets.fromLTRB(24, 16, 24, 16), 
+              decoration: const BoxDecoration(
+                color: AppColors.backgroundLight, 
+                borderRadius: BorderRadius.vertical(
+                 
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 16, //espaço entre nome e preço
+                children: [
+                  // Nome
+                  Text(
+                    product.name,
+                    style: GoogleFonts.orbitron(
+                      fontSize: 25, 
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryDark, 
+                      height: 1.2,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+
+                  // Preço
+                  Row(
+                    children: [
+                      Text(
+                        '${product.price.toStringAsFixed(2)}',
+                        style: GoogleFonts.poppins(
+                          fontSize: 31, 
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryDark,
+                          height: 1.5, 
+                        ),
+                      ),
+                      if (product.originalPrice != null) ...[
+                        const SizedBox(width: 12),
+                        Text(
+                          '${product.originalPrice!.toStringAsFixed(2)}',
+                          style: GoogleFonts.poppins(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.categoryDescription,
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor: AppColors.categoryDescription,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

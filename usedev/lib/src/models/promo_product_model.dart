@@ -22,26 +22,23 @@ class PromoProductModel {
     return [
       PromoProductModel(
         id: '1',
-        name: 'Camisetas Estágios',
-        price: 35.00,
-        imageUrl: 'assets/images/produto_camiseta.png',
+        name: 'Camisetas Capy',
+        price: 28.00,
+        imageUrl: 'assets/images/Cards_produtos/Cards_Home/Mobile/Imagem_produto_Capy_Mobile.png',
         isPromotion: true,
         badge: 'Promoção',
       ),
       PromoProductModel(
         id: '2',
-        name: 'Copa Vida de Dev',
-        price: 28.00,
-        imageUrl: 'assets/images/produto_copa.png',
+        name: 'Mousepad Café',
+        price: 18.00,
+        imageUrl: 'assets/images/Cards_produtos/Cards_Home/Mobile/Imagem_produto_Mousepad_Mobile.png',
       ),
       PromoProductModel(
         id: '3',
-        name: 'Entregas Garantidas',
-        price: 12.00,
-        imageUrl: 'assets/images/produto_entrega.png',
-        isPromotion: true,
-        originalPrice: 24.00,
-        badge: '50% OFF',
+        name: 'Caneca Bug',
+        price: 28.00,
+        imageUrl: 'assets/images/Cards_produtos/Cards_Home/Mobile/Imagem_produto_Caneca_bug_Mobile.png',
       ),
     ];
   }

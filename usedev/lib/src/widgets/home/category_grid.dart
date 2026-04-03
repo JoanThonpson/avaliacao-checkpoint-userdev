@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:usedev/src/core/theme/colors.dart';
-import 'package:usedev/src/models/category_model.dart'; // ajuste o import se necessário
+import 'package:usedev/src/core/theme/colors.dart';
+import 'package:usedev/src/models/category_model.dart';
 
 class CategoryGrid extends StatelessWidget {
   final List<CategoryModel> categories;
@@ -15,56 +15,64 @@ class CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: GridView.builder(
+    return Container(
+      color: AppColors.backgroundWhite, // 
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          childAspectRatio: 1.05, // quadrado ligeiramente retangular
-        ),
         itemCount: categories.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 10), // 
         itemBuilder: (context, index) {
           final category = categories[index];
           return GestureDetector(
             onTap: () => onTap(category),
             child: Container(
+              width: 312, 
+              height: 315, 
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                  image: AssetImage(category.imageUrl),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black.withOpacity(0.75),
-                    ],
+                color: AppColors.backgroundWhite,
+                //borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.categoryShadow.withOpacity(0.15), // 
+                    blurRadius: 24, // 
+                    offset: const Offset(0, 4),
                   ),
-                ),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(
-                      category.name,
-                      style: GoogleFonts.orbitron(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                spacing: 10, // ✅ espaço entre imagem e nome
+                children: [
+                  // Imagem em cima
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(16),
+                      ),
+                      child: Image.asset(
+                        category.imageUrl,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
                       ),
                     ),
                   ),
-                ),
+
+                  // Nome embaixo — fundo branco
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                    child: Text(
+                      category.name,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.orbitron(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.categoryTitle, // 
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );

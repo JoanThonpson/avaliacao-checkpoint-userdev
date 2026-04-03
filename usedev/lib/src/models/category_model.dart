@@ -24,7 +24,7 @@ class CategoryModel {
       ),
       CategoryModel(
         id: '2',
-        name: 'Decorações',
+        name: 'Decoração',
         imageUrl: 'assets/images/Categorias/Mobile/Categoria_Decoração.png',
         description: 'Quadros, pôsteres e itens de decoração',
       ),

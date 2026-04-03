@@ -20,7 +20,7 @@ class CustomHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Color( 0xFFFFFFFF), // Fundo branco para o header
-      padding: const EdgeInsets.all(30), // Padding geral do header
+      padding: const EdgeInsets.all(33), // Padding geral do header
       child: Column(
         mainAxisSize: MainAxisSize.min,
         spacing: 24,

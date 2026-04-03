@@ -1,32 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:usedev/src/core/theme/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PromoSection extends StatelessWidget {
   const PromoSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+    return Container(
+      color: Color(0xFFEFEFEF), 
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Promoções Especiais',
-            style: TextStyle(
-              fontSize: 20,
+          Text(
+            'Promos especiais',
+            style: GoogleFonts.orbitron(
+              fontSize: 25,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 243, 243, 244),
-            ),
-          ),
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              'Ver tudo >',
-              style: TextStyle(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w600,
-              ),
+              color: Color(0xFF0B254B), 
+              height: 1.2,
             ),
           ),
         ],

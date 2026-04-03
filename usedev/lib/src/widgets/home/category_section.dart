@@ -7,26 +7,31 @@ class CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      color: AppColors.backgroundWhite, 
       padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center, 
         children: [
           Text(
             'Categorias',
+            textAlign: TextAlign.center,
             style: GoogleFonts.orbitron(
-              fontSize: 28,
+              fontSize: 25, 
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppColors.categoryTitle, 
+              height: 1.2, // 
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16), 
           Text(
             'De roupas a gadgets tecnológicos temos tudo para atender suas paixões e hobbies com estilo e autenticidade.',
+            textAlign: TextAlign.center,
             style: GoogleFonts.poppins(
-              fontSize: 15,
-              color: AppColors.textSecondary,
-              height: 1.5,
+              fontSize: 16, 
+              fontWeight: FontWeight.w400,
+              color: Color( 0xFF5E6E89),
+              height: 1.2, 
             ),
           ),
         ],

@@ -34,7 +34,7 @@ class _MobileHomeState extends State<MobileHome> {
             pinned: true,
             automaticallyImplyLeading: false,
             toolbarHeight: 150,
-            backgroundColor: Color(0xFFFFFFFF), // ✅
+            backgroundColor: Color(0xFFFFFFFF),
             flexibleSpace: CustomHeader(
               onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
               onLoginTap: () => _showLoginDialog(),
@@ -60,7 +60,7 @@ class _MobileHomeState extends State<MobileHome> {
                        ),
                      ),
                   ),
-              const HeroBanner(), // ✅ sem SizedBox antes
+              const HeroBanner(), 
               const CategorySection(),
               CategoryGrid(
                 categories: MockCategories.getCategories(),

@@ -11,7 +11,7 @@ class HeroBanner extends StatefulWidget {
 
 class _HeroBannerState extends State<HeroBanner> {
   final PageController _pageController = PageController();
-  int _currentPage = 0;
+  //int _currentPage = 0;
 
   @override
   void dispose() {
@@ -65,7 +65,7 @@ class _HeroBannerState extends State<HeroBanner> {
 
               // Texto "Hora de abraçar seu lado geek!" - conforme Figma
               Positioned(
-                bottom: 150,
+                bottom: 130,
                 left: 0,
                 right: 0,
                 child: Column(
@@ -74,22 +74,22 @@ class _HeroBannerState extends State<HeroBanner> {
                       'Hora de abraçar seu',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.orbitron(
-                        fontSize: 55,
+                        fontSize: 50,
                         fontWeight: FontWeight.w700,
                         color: AppColors.accentPink,        // Rosa neon
                         height: 1.50,
-                        letterSpacing: -1.9,
+                        letterSpacing: -2.9,
                       ),
                     ),
                     Text(
                       'lado geek!',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.orbitron(
-                        fontSize: 55,
+                        fontSize: 50,
                         fontWeight: FontWeight.w700,
                         color: AppColors.accentGreen,       // Verde limão
                         height: 1.50,
-                        letterSpacing: -1.9,
+                        letterSpacing: -2.9,
                       ),
                     ),
                   ],

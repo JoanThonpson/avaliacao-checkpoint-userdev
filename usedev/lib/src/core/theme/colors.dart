@@ -11,7 +11,7 @@ class AppColors {
   // Fundos
   static const Color backgroundDark = Color(0xFF090129);
   static const Color backgroundLight = Color(0xFFEFEFEF);
-  static const Color backgroundWhite = Color(0xFFFFFFFF); // ✅ novo
+  static const Color backgroundWhite = Color(0xFFFFFFFF); 
   static const Color surface = Color(0xFF090129);
 
   // Texto

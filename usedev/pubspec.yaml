@@ -75,6 +75,9 @@ flutter:
    - assets/images/Categorias/Mobile/Categoria_canecas.png
    - assets/images/Categorias/Mobile/Categoria_Acessorios.png
    - assets/images/Banner_secoes_Mobile.png
+   - assets/images/Cards_produtos/Cards_Home/Mobile/Imagem_produto_Capy_Mobile.png
+   - assets/images/Cards_produtos/Cards_Home/Mobile/Imagem_produto_Mousepad_Mobile.png
+   - assets/images/Cards_produtos/Cards_Home/Mobile/Imagem_produto_Caneca_bug_Mobile.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
