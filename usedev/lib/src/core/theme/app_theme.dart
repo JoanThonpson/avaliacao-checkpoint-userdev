@@ -3,46 +3,60 @@ import 'package:google_fonts/google_fonts.dart';
 import 'colors.dart';
 
 class AppTheme {
+  // ==================== TEMA ESCURO ====================
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.backgroundDark,
-    colorScheme: ColorScheme.dark(
+    colorScheme: const ColorScheme.dark(
       primary: AppColors.primary,
       secondary: AppColors.accentPink,
-      surface: AppColors.surface,
-      background: AppColors.backgroundDark,
+      surface: AppColors.backgroundDark,
     ),
     textTheme: GoogleFonts.poppinsTextTheme(
       ThemeData.dark().textTheme,
     ).copyWith(
-      // Títulos grandes usam Orbitron
+      // Escala tipográfica do Figma — Orbitron
       displayLarge: GoogleFonts.orbitron(
-        fontSize: 32,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+        fontSize: 76, fontWeight: FontWeight.bold, color: AppColors.textLight,
       ),
       displayMedium: GoogleFonts.orbitron(
-        fontSize: 28,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+        fontSize: 61, fontWeight: FontWeight.bold, color: AppColors.textLight,
+      ),
+      displaySmall: GoogleFonts.orbitron(
+        fontSize: 48, fontWeight: FontWeight.bold, color: AppColors.textLight,
       ),
       headlineLarge: GoogleFonts.orbitron(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+        fontSize: 39, fontWeight: FontWeight.bold, color: AppColors.textLight,
       ),
       headlineMedium: GoogleFonts.orbitron(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-        color: Colors.white,
+        fontSize: 31, fontWeight: FontWeight.w600, color: AppColors.textLight,
+      ),
+      headlineSmall: GoogleFonts.orbitron(
+        fontSize: 25, fontWeight: FontWeight.w600, color: AppColors.textLight,
+      ),
+      titleLarge: GoogleFonts.orbitron(
+        fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textLight,
+      ),
+      // Escala tipográfica do Figma — Poppins
+      bodyLarge: GoogleFonts.poppins(
+        fontSize: 20, color: AppColors.textLight,
+      ),
+      bodyMedium: GoogleFonts.poppins(
+        fontSize: 16, color: AppColors.textLight,
+      ),
+      bodySmall: GoogleFonts.poppins(
+        fontSize: 12, color: AppColors.textMuted,
+      ),
+      labelLarge: GoogleFonts.poppins(
+        fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textLight,
       ),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      iconTheme: const IconThemeData(color: Colors.white),
+      iconTheme: const IconThemeData(color: AppColors.textLight),
       titleTextStyle: GoogleFonts.orbitron(
-        color: Colors.white,
+        color: AppColors.textLight,
         fontSize: 22,
         fontWeight: FontWeight.bold,
       ),
@@ -50,12 +64,68 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        foregroundColor: AppColors.textLight,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+        ),
       ),
     ),
   );
 
-  // Tema light (se precisar depois)
-  static ThemeData lightTheme = darkTheme; // por enquanto usamos só dark
+  // ==================== TEMA CLARO ====================
+  static ThemeData lightTheme = ThemeData(
+    useMaterial3: true,
+    scaffoldBackgroundColor: AppColors.backgroundLight,
+    colorScheme: const ColorScheme.light(
+      primary: AppColors.primary,
+      secondary: AppColors.accentPink,
+      surface: AppColors.backgroundLight,
+    ),
+    textTheme: GoogleFonts.poppinsTextTheme(
+      ThemeData.light().textTheme,
+    ).copyWith(
+      displayLarge: GoogleFonts.orbitron(
+        fontSize: 76, fontWeight: FontWeight.bold, color: AppColors.textPrimary,
+      ),
+      displayMedium: GoogleFonts.orbitron(
+        fontSize: 61, fontWeight: FontWeight.bold, color: AppColors.textPrimary,
+      ),
+      displaySmall: GoogleFonts.orbitron(
+        fontSize: 48, fontWeight: FontWeight.bold, color: AppColors.textPrimary,
+      ),
+      headlineLarge: GoogleFonts.orbitron(
+        fontSize: 39, fontWeight: FontWeight.bold, color: AppColors.textPrimary,
+      ),
+      headlineMedium: GoogleFonts.orbitron(
+        fontSize: 31, fontWeight: FontWeight.w600, color: AppColors.textPrimary,
+      ),
+      headlineSmall: GoogleFonts.orbitron(
+        fontSize: 25, fontWeight: FontWeight.w600, color: AppColors.textPrimary,
+      ),
+      titleLarge: GoogleFonts.orbitron(
+        fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimary,
+      ),
+      bodyLarge: GoogleFonts.poppins(
+        fontSize: 20, color: AppColors.textPrimary,
+      ),
+      bodyMedium: GoogleFonts.poppins(
+        fontSize: 16, color: AppColors.textPrimary,
+      ),
+      bodySmall: GoogleFonts.poppins(
+        fontSize: 12, color: AppColors.textSecondary,
+      ),
+      labelLarge: GoogleFonts.poppins(
+        fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimary,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textLight,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+        ),
+      ),
+    ),
+  );
 }

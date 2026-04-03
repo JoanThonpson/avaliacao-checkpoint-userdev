@@ -1,7 +1,10 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
-import 'package:usedev/src/screens/home/mobile_home.dart';
 import 'package:usedev/src/widgets/responsive/responsive_layout.dart';
-//import 'package:usedev/src/screens/home/mobile_home.dart';
+
+// Importações das telas
+import 'package:usedev/src/screens/home/mobile_home.dart'; 
 import 'package:usedev/src/screens/home/tablet_home.dart';
 import 'package:usedev/src/screens/home/desktop_home.dart';
 
@@ -10,10 +13,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveLayout(
-      mobile: const MobileHome(),
-      tablet: const TabletHome(),
-      desktop: const DesktopHome(),
+    return const ResponsiveLayout(
+      mobile: MobileHome(),
+      tablet: TabletHome(),
+      desktop: DesktopHome(),
     );
   }
 }

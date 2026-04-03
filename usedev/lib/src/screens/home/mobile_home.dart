@@ -1,7 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:usedev/src/data/mock_categories.dart';
 import 'package:usedev/src/data/mock_products.dart';
-import 'package:usedev/src/widgets/common/search_bar.dart';
 import 'package:usedev/src/widgets/home/custom_header.dart';
 import 'package:usedev/src/widgets/home/hero_banner.dart';
 import 'package:usedev/src/widgets/home/category_section.dart';
@@ -31,31 +32,39 @@ class _MobileHomeState extends State<MobileHome> {
         slivers: [
           SliverAppBar(
             pinned: true,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: null,
-            flexibleSpace: FlexibleSpaceBar(
-              background: CustomHeader(
-                onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
-                onLoginTap: () => _showLoginDialog(),
-                onCartTap: () => Navigator.pushNamed(context, '/cart'),
-              ),
+            automaticallyImplyLeading: false,
+            toolbarHeight: 150,
+            backgroundColor: Color(0xFFFFFFFF), // ✅
+            flexibleSpace: CustomHeader(
+              onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
+              onLoginTap: () => _showLoginDialog(),
+              onCartTap: () => Navigator.pushNamed(context, '/cart'),
+              searchController: _searchController,
             ),
-            expandedHeight: 70,
           ),
+
           SliverToBoxAdapter(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 8),
-                CustomSearchBar(controller: _searchController),
-                HeroBanner(
-                  
-                ),
-                const CategorySection(),
-                CategoryGrid(
-                  categories: MockCategories.getCategories(),
-                  onTap: (category) {
+                sin(  DateTime.now().millisecondsSinceEpoch / 500) > 0
+                    ? const SizedBox(height: 15)
+                    : const SizedBox.shrink(),
+                 Center(
+                    child: SizedBox(
+                      width: 312,
+                      height: 439,
+                      child: Image.asset(
+                        'assets/images/Imagem_hero_mobile.png',
+                        fit: BoxFit.cover,
+                       ),
+                     ),
+                  ),
+              const HeroBanner(), // ✅ sem SizedBox antes
+              const CategorySection(),
+              CategoryGrid(
+                categories: MockCategories.getCategories(),
+                onTap: (category) {
                     Navigator.pushNamed(
                       context,
                       '/products',
@@ -81,7 +90,7 @@ class _MobileHomeState extends State<MobileHome> {
                 ),
                 const NewsletterSection(),
                 const FooterSection(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
               ],
             ),
           ),
@@ -96,39 +105,20 @@ class _MobileHomeState extends State<MobileHome> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Color(0xFF213366),
-            ),
-            child: Text(
-              'UseDev',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
           ListTile(
             leading: const Icon(Icons.home),
             title: const Text('Início'),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: () => Navigator.pop(context),
           ),
           ListTile(
             leading: const Icon(Icons.category),
             title: const Text('Categorias'),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: () => Navigator.pop(context),
           ),
           ListTile(
             leading: const Icon(Icons.favorite_border),
             title: const Text('Favoritos'),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: () => Navigator.pop(context),
           ),
           ListTile(
             leading: const Icon(Icons.person_outline),
@@ -142,9 +132,7 @@ class _MobileHomeState extends State<MobileHome> {
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: const Text('Sobre'),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: () => Navigator.pop(context),
           ),
         ],
       ),

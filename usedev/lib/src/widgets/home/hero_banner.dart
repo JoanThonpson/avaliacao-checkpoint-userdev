@@ -2,118 +2,134 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:usedev/src/core/theme/colors.dart';
 
-class HeroBanner extends StatelessWidget {
+class HeroBanner extends StatefulWidget {
   const HeroBanner({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // === PRIMEIRA IMAGEM: Pessoa com camiseta e Texto ===
-        Container(
-          width: double.infinity,
-          height: 340,
-          margin: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/Imagem_hero_mobile.png'), // Imagem de fundo
-              fit: BoxFit.cover,
-            ),
-          ),
-          
-        ),
+  State<HeroBanner> createState() => _HeroBannerState();
+}
 
-        // === SEGUNDA IMAGEM: Banner de Seções (abaixo) ===
-        Container(
-          width: double.infinity,
-          height: 180, // Mantive a altura que você definiu
-          margin: const EdgeInsets.fromLTRB(16, 0, 16, 16), // Espaçamento superior zero para colar levemente
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/Banner_secoes_Mobile.png'), // Segunda imagem
-              fit: BoxFit.cover,
-            ),
-            // Adicionei uma sombra leve para dar profundidade, opcional
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Stack(
+class _HeroBannerState extends State<HeroBanner> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: AppColors.primaryDark,
+      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+      child: Column(
+        children: [
+          // Área principal do Hero
+          Stack(
             children: [
-              // Overlay gradiente dark para dar leitura ao texto
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black.withOpacity(0.85), // Escureci um pouco mais para melhor leitura
-                    ],
+              // Imagem principal (pessoa com camiseta)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: SizedBox(
+                  height: 440, // altura ajustada para caber o texto grande
+                  width: double.infinity,
+                  child: Image.asset(
+                    'assets/images/Banner_secoes_Mobile.png',
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-              // Conteúdo de Texto e Botão
+
+              // Overlay escuro na parte inferior
               Positioned(
-                bottom: 28,
-                left: 24,
-                right: 24,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 220,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.85),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              // Texto "Hora de abraçar seu lado geek!" - conforme Figma
+              Positioned(
+                bottom: 150,
+                left: 0,
+                right: 0,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min, // Garante que a coluna ocupe o espaço mínimo
                   children: [
                     Text(
-                      "Hora de abraçar",
+                      'Hora de abraçar seu',
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.orbitron(
-                        fontSize: 29, 
-                        fontWeight: FontWeight.bold, 
-                        color: Colors.white,
-                        height: 1.1,
+                        fontSize: 55,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.accentPink,        // Rosa neon
+                        height: 1.50,
+                        letterSpacing: -1.9,
                       ),
                     ),
                     Text(
-                      "seu lado geek!",
+                      'lado geek!',
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.orbitron(
-                        fontSize: 29,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.accentPink, // Rosa neon
-                        height: 1.1,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white, // Cor do texto do botão
-                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        elevation: 5,
-                      ),
-                      child: Text(
-                        "Ver as novidades!",
-                        style: GoogleFonts.poppins(
-                          fontSize: 16, 
-                          fontWeight: FontWeight.w600,
-                        ),
+                        fontSize: 55,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.accentGreen,       // Verde limão
+                        height: 1.50,
+                        letterSpacing: -1.9,
                       ),
                     ),
                   ],
                 ),
               ),
+
+              // Botão "Ver as novidades!"
+              Positioned(
+                bottom: 24,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: SizedBox(
+                    width: 268,
+                    height: 68,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32),
+                        ),
+                        elevation: 4,
+                      ),
+                      child: Text(
+                        'Ver as novidades!',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

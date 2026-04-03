@@ -1,56 +1,66 @@
 import 'package:flutter/material.dart';
-//import 'package:usedev/src/core/theme/colors.dart';
+import 'package:usedev/src/core/theme/colors.dart';
+import 'package:usedev/src/widgets/common/search_bar.dart';
 
 class CustomHeader extends StatelessWidget {
   final VoidCallback onMenuTap;
   final VoidCallback onLoginTap;
   final VoidCallback onCartTap;
+  final TextEditingController searchController;
 
   const CustomHeader({
     super.key,
     required this.onMenuTap,
     required this.onLoginTap,
     required this.onCartTap,
+    required this.searchController,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      color: const Color.fromARGB(255, 248, 248, 252),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      color: Color( 0xFFFFFFFF), // Fundo branco para o header
+      padding: const EdgeInsets.all(30), // Padding geral do header
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 24,
         children: [
-          // Menu Hambúrguer
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: onMenuTap,
-            color: const Color.fromARGB(255, 7, 7, 7),
-          ),
-          
-          // Logo como imagem
-          Image.asset(
-            'assets/logo/PNG/Logo_UseDev.png',
-            height: 40,
-            width: 120,
-            fit: BoxFit.contain,
-          ),
-
-          // Ícones de ação
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                icon: const Icon(Icons.person_outline),
-                onPressed: onLoginTap,
-                color: const Color.fromARGB(255, 13, 13, 13),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                icon: const Icon(Icons.menu, color: AppColors.textPrimary), 
+                onPressed: onMenuTap,
               ),
-              IconButton(
-                icon: const Icon(Icons.shopping_cart_outlined),
-                onPressed: onCartTap,
-                color: const Color.fromARGB(255, 3, 3, 3),
+              Image.asset(
+                'assets/logo/PNG/Logo_UseDev.png',
+                height: 42,
+                fit: BoxFit.contain,
+              ),
+              Row(
+                spacing: 8,
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    iconSize: 32,
+                    icon: const Icon(Icons.person_outline, color: AppColors.textPrimary),
+                    onPressed: onLoginTap,
+                  ),
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    iconSize: 32,
+                    icon: const Icon(Icons.shopping_cart_outlined, color: AppColors.textPrimary),
+                    onPressed: onCartTap,
+                  ),
+                ],
               ),
             ],
           ),
+          CustomSearchBar(controller: searchController),
         ],
       ),
     );
